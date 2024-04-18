@@ -35,7 +35,7 @@ services:
       context: ./docker/db
       dockerfile: Dockerfile
     ports:
-      - 3306:3306
+      - 3307:3307
     environment:
       MYSQL_DATABASE: database
       MYSQL_USER: user
