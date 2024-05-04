@@ -9,7 +9,7 @@ use OpenApi\Attributes as OA;
 class CodeController extends Controller
 {
 
-    function codeResult($code){
+    function codeExecutionOutput($code){
         ob_start();
         eval($code);
         $output = ob_get_clean();
@@ -29,7 +29,7 @@ class CodeController extends Controller
     )]
     public function index(Request $request): string
     {
-        $resultCode = self::codeResult($request->code);
+        $resultCode = self::codeExecutionOutput($request->code);
         $isCorrect = self::isCorrect($resultCode);
         return $isCorrect ? 'ok' : 'ng';
     }
