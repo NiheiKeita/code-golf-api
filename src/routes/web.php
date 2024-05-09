@@ -9,3 +9,7 @@ Route::get('/', function () {
 });
 Route::post('/api/code-check', [CodeController::class, 'index'])->name('code_check');
 Route::get('/api/questions', [QuestionController::class, 'index'])->name('question_list');
+Route::post('/api/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+    return ['token' => $token->plainTextToken];
+});
