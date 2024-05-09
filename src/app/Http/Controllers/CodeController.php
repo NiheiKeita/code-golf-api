@@ -27,11 +27,17 @@ class CodeController extends Controller
             new OA\Response(response: 401, description: 'Not allowed'),
         ]
     )]
-    public function index(Request $request): string
+    public function index(Request $request): Array
     {
         $resultCode = self::codeExecutionOutput($request->code);
         $isCorrect = self::isCorrect($resultCode);
-        return $isCorrect ? 'ok' : 'ng';
+        // return $isCorrect ? 'ok' : 'ng';
+
+        $data = [
+            "result" => $isCorrect,
+            // "result" => $request->code,
+        ];
+        return $data;
     }
 
 }
