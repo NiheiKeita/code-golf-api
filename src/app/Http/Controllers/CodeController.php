@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Conference;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
-use GuzzleHttp\Client;
 
 class CodeController extends Controller
 {
@@ -30,33 +28,44 @@ class CodeController extends Controller
     )]
     public function index(Request $request): Array
     {
-        // $resultCode = self::codeExecutionOutput($request->code);
-        // $isCorrect = self::isCorrect($resultCode);
-        // return $isCorrect ? 'ok' : 'ng';
-        // $resp = Http::get('/api/api/code-check' . $request->code);
-        $client = new Client();
-        $response = $client->request('GET', '/api/api/code-check');
+        //TODO(あとでDocker内でlocalhostsにアクセスできるようにする)
+        $url = "http://172.20.0.1:8081/api/api/code-check";
+        $data = array(
+            'code' => $request->code,
+        );
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
+        curl_setopt($ch, CURLOPT_URL, $url);
 
+        $response  = curl_exec($ch);
+        $error = curl_error($ch);
+        curl_close($ch);
 
+        if($error){
+            $errorData = [
+                "result" => "error",
+                "error" => $error,
+            ];
+            return $errorData;
+        }
         $data = [
-            "result" => "s",
-            // "result" => $request->code,
+            "result" => "ok",
+            "response" => $response,
+            "error" => $error,
+            "code" => $request->code,
         ];
         return $data;
     }
+
     public function check(Request $request): Array
     {
+        $resultCode = self::codeExecutionOutput($request->code);
         $data = [
-            "result" => "check",
+            "result" => $resultCode,
         ];
         return $data;
-        // $resultCode = self::codeExecutionOutput($request->code);
-
-        // $data = [
-        //     "result" => $resultCode,
-        //     // "result" => $request->code,
-        // ];
-        // return $data;
     }
 
 }
