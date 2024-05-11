@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conference;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
+use GuzzleHttp\Client;
 
 class CodeController extends Controller
 {
@@ -29,15 +30,33 @@ class CodeController extends Controller
     )]
     public function index(Request $request): Array
     {
-        $resultCode = self::codeExecutionOutput($request->code);
-        $isCorrect = self::isCorrect($resultCode);
+        // $resultCode = self::codeExecutionOutput($request->code);
+        // $isCorrect = self::isCorrect($resultCode);
         // return $isCorrect ? 'ok' : 'ng';
+        // $resp = Http::get('/api/api/code-check' . $request->code);
+        $client = new Client();
+        $response = $client->request('GET', '/api/api/code-check');
+
 
         $data = [
-            "result" => $isCorrect,
+            "result" => "s",
             // "result" => $request->code,
         ];
         return $data;
+    }
+    public function check(Request $request): Array
+    {
+        $data = [
+            "result" => "check",
+        ];
+        return $data;
+        // $resultCode = self::codeExecutionOutput($request->code);
+
+        // $data = [
+        //     "result" => $resultCode,
+        //     // "result" => $request->code,
+        // ];
+        // return $data;
     }
 
 }
