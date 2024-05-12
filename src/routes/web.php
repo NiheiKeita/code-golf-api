@@ -10,9 +10,4 @@ Route::get('/', function () {
 });
 Route::post('/api/code-check', [CodeController::class, 'index'])->withoutMiddleware(ValidateCsrfToken::class);
 Route::post('/api/api/code-check', [CodeController::class, 'check'])->name('check')->withoutMiddleware(ValidateCsrfToken::class);
-Route::get('/api/ddd', [CodeController::class, 'ddd'])->withoutMiddleware(ValidateCsrfToken::class);
 Route::get('/api/questions', [QuestionController::class, 'index'])->name('question_list');
-// Route::post('/api/tokens/create', function (Request $request) {
-//     $token = $request->user()->createToken($request->token_name);
-//     return ['token' => $token->plainTextToken];
-// })->withoutMiddleware(ValidateCsrfToken::class);
