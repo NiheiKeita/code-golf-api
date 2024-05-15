@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Conference;
+use App\Models\Question;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
@@ -28,6 +28,7 @@ class QuestionController extends Controller
     }
     public function show(Request $request): Array
     {
+        $data = Question::find(1);
         $data = 
         [
             "id" => 1,
