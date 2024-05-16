@@ -10,6 +10,7 @@ class QuestionController extends Controller
 {
     public function index(Request $request): Array
     {
+        $data = Question::get();
         $data = [
             [
                 "id" => 1,
