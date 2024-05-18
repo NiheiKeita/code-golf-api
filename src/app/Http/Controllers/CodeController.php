@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Repositories\CodeCheck;
+use App\Models\Code;
+use App\Models\Question;
+use App\Models\User;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
 
@@ -35,8 +38,11 @@ class CodeController extends Controller
         $isCorrect = self::isCorrect($result->response ?? "");
         $codeResult = !$result->error ? ($isCorrect ? "ok" : "ng") : "error";
         $byte = null;
+        $user = User::find($request->id);
+        $question = Question::find($request->question_id);
         if($codeResult === "ok"){
             $byte = strlen($request->code);
+            self::createCode($request->code,$user,$question);
         }
 
         $data = [
@@ -58,4 +64,12 @@ class CodeController extends Controller
         return $data;
     }
 
+    public function createCode($code, $user, $quesion){
+
+        Code::create([
+            "user_id" => $user->id,
+            "question_id" => $quesion->id,
+            "code" => $code,
+        ]);
+    }
 }
