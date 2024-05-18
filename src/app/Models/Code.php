@@ -35,7 +35,10 @@ class Code extends Model
     {
         return array_merge(
             parent::toArray(),
-            ['code_byte' => $this->code_byte]
+            [
+                'code_byte' => $this->code_byte,
+                'user_name' => $this->user->name
+            ]
         );
     }
     public function scopeMaxCodeBytePerUser(Builder $query)
