@@ -19,15 +19,8 @@ class Question extends Model
     {
         return $this->hasMany(Code::class);
     }
-    public function scopeCodeRanking($query)
+    public function getMaxCodeBytePerUser()
     {
-        // return $query->whereHas('codes', function ($query) {
-        //     return $query->groupBy('user_id')->map(function ($group) {
-        //         return $group->sortBy('code_byte')->first();
-        //     });
-        // })->get();
-        // return $query->codes()->get()->groupBy('user_id')->map(function ($group) {
-        //     return $group->sortBy('code_byte')->first();
-        // })->sortBy('code_byte');
+        return $this->codes()->maxCodeBytePerUser();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +17,6 @@ class Code extends Model
         'id',
     ];
     
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -37,5 +37,11 @@ class Code extends Model
             parent::toArray(),
             ['code_byte' => $this->code_byte]
         );
+    }
+    public function scopeMaxCodeBytePerUser(Builder $query)
+    {
+        return $query->get()->groupBy('user_id')->map(function ($group) {
+            return $group->sortBy('code_byte')->first();
+        })->sortBy('code_byte');
     }
 }
