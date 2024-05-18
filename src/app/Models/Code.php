@@ -45,6 +45,6 @@ class Code extends Model
     {
         return $query->get()->groupBy('user_id')->map(function ($group) {
             return $group->sortBy('code_byte')->first();
-        })->sortBy('code_byte');
+        })->sortBy('code_byte')->flatten();
     }
 }
