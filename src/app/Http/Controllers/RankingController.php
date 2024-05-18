@@ -2,27 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class RankingController extends Controller
 {
-    public function index(Request $request): Array
+    public function index(Request $request)
     {
-        $data =[
-            [
-                "user_id" => 1,
-                "byte" => 55,
-            ],
-            [
-                "user_id" => 23,
-                "byte" => 56,
-            ],
-            [
-                "user_id" => 3,
-                "byte" => 57,
-            ],
-        ];
-        return $data;
+        $question = Question::find($request->id);
+        $codes = $question->codes()->get()->groupBy('user_id')->map(function ($group) {
+            return $group->sortBy('code_byte')->first();
+        })->sortBy('code_byte');
+        // $codes = $question->codeRanking();
+        
+        return response()->json(['codes' => $codes]);
     }
     
 }

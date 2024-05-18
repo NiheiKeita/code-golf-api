@@ -26,4 +26,16 @@ class Code extends Model
     {
         return $this->belongsTo(Question::class);
     }
+
+    public function getCodeByteAttribute()
+    {
+        return  strlen($this->code);
+    }
+    public function toArray()
+    {
+        return array_merge(
+            parent::toArray(),
+            ['code_byte' => $this->code_byte]
+        );
+    }
 }

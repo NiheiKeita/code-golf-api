@@ -12,24 +12,21 @@ class UserController extends Controller
         $user = User::create([
             "name" => $request->name,
         ]);
-        $data = [
+        return [
             "name" => $user->name,
             "id" => $user->id,
         ];
-        return $data;
     }
     public function update(Request $request): Array
     {
-        // return ["dd"=>$request->user_id];
         $user = User::find($request->user_id);
         $user->update([
             "name" => $request->name,
         ]);
-        $data = [
+        return[
             "name" => $user->name,
             "id" => $user->id,
         ];
-        return $data;
     }
     
 }
