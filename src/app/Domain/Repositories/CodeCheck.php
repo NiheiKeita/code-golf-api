@@ -18,7 +18,7 @@ class CodeCheck
         $data = array(
             'code' => $code,
         );
-        $url = "http://172.20.0.1:8081/api/api/code-check";
+        $url = config('app.php_check_url');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

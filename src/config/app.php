@@ -123,4 +123,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'php_check_url' => env('PHP_CHECK_URL', ''),
+
 ];
