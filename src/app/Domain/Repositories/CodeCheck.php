@@ -3,10 +3,7 @@
 namespace App\Domain\Repositories;
 
 class CheckResult {
-    public function __construct(string $response="", string $error="", string $code=""){
-        $this->response = $response;
-        $this->error = $error;
-        $this->code = $code;
+    public function __construct(public string $response="", public string $error="",public string $code=""){
     }
 }
 class CodeCheck
