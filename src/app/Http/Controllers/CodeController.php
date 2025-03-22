@@ -45,7 +45,7 @@ class CodeController extends Controller
                 'message' => 'question not found.'
             ], 404);
         }
-    
+
         $codeCheck = new CodeCheck();
         $result = $codeCheck->codeCheck($request->code ?? "");
         $isCorrect = self::isCorrect($result->response ?? "", $question->answer);
