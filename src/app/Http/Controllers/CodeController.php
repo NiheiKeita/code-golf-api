@@ -64,6 +64,7 @@ class CodeController extends Controller
         ], 200);
     }
 
+// TODO: 別コンテナへ移行
     public function check(Request $request): Array
     {
         $resultCode = self::codeExecutionOutput($request->code);

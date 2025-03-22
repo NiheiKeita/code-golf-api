@@ -11,6 +11,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::post('/api/code-check', [CodeController::class, 'index'])->withoutMiddleware(ValidateCsrfToken::class);
+
+// TODO: 別コンテナへ移行
 Route::post('/api/api/code-check', [CodeController::class, 'check'])->name('check')->withoutMiddleware(ValidateCsrfToken::class);
 
 Route::get('/api/questions/{question}/ranking', [RankingController::class, 'index']);
