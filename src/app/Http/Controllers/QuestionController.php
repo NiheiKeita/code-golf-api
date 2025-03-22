@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
-use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
     public function index()
     {
-        $data = Question::get();
+        $data = Question::all();
         return response()->json(['questions' => $data]);
-        return $data;
     }
-    public function show(Request $request)
+    public function show(Question $question)
     {
-        $data = Question::find($request->id);
-        return response()->json(['question' => $data]);
+        return response()->json(['question' => $question]);
     }
 
 }
