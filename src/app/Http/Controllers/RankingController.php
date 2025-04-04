@@ -12,5 +12,4 @@ class RankingController extends Controller
 
         return response()->json(['codes' => $codes]);
     }
-
 }
