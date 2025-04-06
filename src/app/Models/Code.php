@@ -16,7 +16,7 @@ class Code extends Model
     protected $guarded = [
         'id',
     ];
-    
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -29,8 +29,9 @@ class Code extends Model
 
     public function getCodeByteAttribute()
     {
-        return  strlen($this->code);
+        return strlen($this->code);
     }
+
     public function toArray()
     {
         return array_merge(
@@ -41,6 +42,7 @@ class Code extends Model
             ]
         );
     }
+
     public function scopeMaxCodeBytePerUser(Builder $query)
     {
         return $query->get()->groupBy('user_id')->map(function ($group) {

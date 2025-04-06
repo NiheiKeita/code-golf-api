@@ -11,6 +11,7 @@ class Question extends Model
 {
     use HasFactory;
     use SoftDeletes;
+
     protected $guarded = [
         'id',
     ];
@@ -19,6 +20,7 @@ class Question extends Model
     {
         return $this->hasMany(Code::class);
     }
+
     public function getMaxCodeBytePerUser()
     {
         return $this->codes()->maxCodeBytePerUser();

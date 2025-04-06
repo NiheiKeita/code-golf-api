@@ -2,8 +2,10 @@
 
 namespace App\Domain\Repositories;
 
-class CheckResult {
-    public function __construct(public string $response="", public string $error="",public string $code=""){
+class CheckResult
+{
+    public function __construct(public string $response = "", public string $error = "", public string $code = "")
+    {
     }
 }
 class CodeCheck
@@ -12,9 +14,9 @@ class CodeCheck
     {
 
         //TODO(あとでDocker内でlocalhostsにアクセスできるようにする)
-        $data = array(
+        $data = [
             'code' => $code,
-        );
+        ];
         $url = config('app.php_check_url');
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
@@ -24,7 +26,7 @@ class CodeCheck
         $response = curl_exec($ch);
         $outPutString = "";
         $error = curl_error($ch);
-        if(!$error){
+        if (!$error) {
             $resArray = json_decode($response);
             $outPutString = $resArray->result;
         }
