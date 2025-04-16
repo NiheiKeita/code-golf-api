@@ -3,16 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
-use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RankingController extends Controller
 {
-    public function index(Request $request)
+    public function index(Question $question): JsonResponse
     {
-        $question = Question::find($request->id);
         $codes = $question->getMaxCodeBytePerUser();
-        
+
         return response()->json(['codes' => $codes]);
     }
-    
 }
