@@ -51,6 +51,9 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * @return HasMany<Code>
+     */
     public function codes(): HasMany
     {
         return $this->hasMany(Code::class);

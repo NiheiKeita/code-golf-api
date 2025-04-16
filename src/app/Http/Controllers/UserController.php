@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function store(Request $request): array
     {
         $user = User::create([
@@ -18,9 +22,14 @@ class UserController extends Controller
         ];
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function update(Request $request): array
     {
-        $user = User::find($request->user_id);
+        /** @var \App\Models\User $user */
+        $user = User::findOrFail($request->user_id);
         $user->update([
             "name" => $request->name,
         ]);

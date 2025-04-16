@@ -16,13 +16,27 @@ class Question extends Model
         'id',
     ];
 
+    /**
+     * @return HasMany<Code>
+     */
     public function codes(): HasMany
     {
         return $this->hasMany(Code::class);
     }
 
-    public function getMaxCodeBytePerUser()
+    /**
+     * The attributes that should be cast.
+     *
+     * @return mixed
+     */
+    public function getMaxCodeBytePerUser(): mixed
     {
-        return $this->codes()->maxCodeBytePerUser();
+        // return $this->codes()->maxCodeBytePerUser();
+        $result = $this->codes
+        ->groupBy('user_id')
+        ->map(fn($group) => $group->sortBy('code_byte')->first())
+        ->sortBy('code_byte')
+        ->values();
+        return $result;
     }
 }

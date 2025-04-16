@@ -4,9 +4,8 @@ namespace App\Domain\Repositories;
 
 class CodeCheck
 {
-    public function codeCheck($code): CheckResult
+    public function codeCheck(string $code): CheckResult
     {
-
         //TODO(あとでDocker内でlocalhostsにアクセスできるようにする)
         $data = [
             'code' => $code,
@@ -20,9 +19,14 @@ class CodeCheck
         $response = curl_exec($ch);
         $outPutString = "";
         $error = curl_error($ch);
-        if (!$error) {
+        if (!$error && is_string($response)) {
             $resArray = json_decode($response);
-            $outPutString = $resArray->result;
+            if (is_object($resArray) && property_exists($resArray, 'result')) {
+                $outPutString = $resArray->result;
+            } else {
+                // JSONデコードに失敗した場合または 'result' プロパティがない場合
+                $outPutString = 'Error: Invalid response format or missing result';
+            }
         }
         curl_close($ch);
 
